@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["universe", "universe/shared/typescript-analysis"],
+  extends: ["universe/native", "universe/shared/typescript-analysis"],
   overrides: [
     {
       files: ["*.ts", "*.tsx", "*.d.ts"],
