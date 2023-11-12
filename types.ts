@@ -1,7 +1,12 @@
 import Meal from "./models/meal";
 
 export type RootStackParamsList = {
-  Categories: undefined;
+  CategoriesScreen: undefined;
   MealsOverview: { categoryId: string };
   MealDetail: { meal: Meal };
+};
+
+export type RootDrawerParamsList = {
+  Categories: undefined;
+  Favourites: undefined;
 };

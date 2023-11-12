@@ -1,8 +1,9 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 
-import CategoriesScreen from "./screens/CategoriesScreen";
+import CategoriesWithDrawerScreen from "./screens/CategoriesWithDrawerScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import { RootStackParamsList } from "./types";
@@ -15,7 +16,7 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Categories"
+          initialRouteName="CategoriesScreen"
           screenOptions={{
             headerStyle: { backgroundColor: "#371700" },
             headerTintColor: "white",
@@ -23,21 +24,16 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="Categories"
-            component={CategoriesScreen}
-            options={{
-              title: "All Categories",
-            }}
+            name="CategoriesScreen"
+            component={CategoriesWithDrawerScreen}
+            options={{ headerShown: false }}
           />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            /*options={({ route }) => {
-              const name = CATEGORIES.
-              return { title: route.params.categoryId };
-            }}*/
+            name="MealDetail"
+            component={MealDetailScreen}
+            options={{ title: "Meal" }}
           />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
