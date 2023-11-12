@@ -15,7 +15,9 @@ const CategoriesScreen = (
       renderItem={({ item }) => (
         <CategoryGridTile
           item={item}
-          onPress={() => props.navigation.navigate("MealsOverview")}
+          onPress={() =>
+            props.navigation.navigate("MealsOverview", { categoryId: item.id })
+          }
         />
       )}
       numColumns={2}
