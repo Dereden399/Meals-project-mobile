@@ -1,5 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
-  GestureResponderEvent,
   Image,
   Platform,
   Pressable,
@@ -8,22 +9,28 @@ import {
   View,
 } from "react-native";
 
-import MealDetails from "./MealDetails";
-import Meal from "../models/meal";
+import Meal from "../../models/meal";
+import { RootStackParamsList } from "../../types";
+import MealDetails from "../MealDetails";
 
-const MealTile = ({
-  meal,
-  onPress,
-}: {
-  meal: Meal;
-  onPress: (arg0: GestureResponderEvent) => void;
-}) => {
+type ScreenNavProps = NativeStackNavigationProp<
+  RootStackParamsList,
+  "MealsOverview"
+>;
+
+const MealTile = ({ meal }: { meal: Meal }) => {
+  const nav = useNavigation<ScreenNavProps>();
+
+  const pressHandler = () => {
+    nav.navigate("MealDetail", { meal });
+  };
+
   return (
     <View style={styles.container}>
       <Pressable
         android_ripple={styles.androidRipple}
         style={({ pressed }) => pressed && styles.iosButtonPressed}
-        onPress={onPress}
+        onPress={pressHandler}
       >
         <View style={styles.inner}>
           <View>

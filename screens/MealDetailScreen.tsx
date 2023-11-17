@@ -1,24 +1,37 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import List from "../components/List";
 import MealDetails from "../components/MealDetails";
 import StarButton from "../components/StarButton";
+import { FavouritesContext } from "../store/context/favourites-context";
 import { RootStackParamsList } from "../types";
 
 const MealDetailScreen = (
-  props: NativeStackScreenProps<RootStackParamsList, "MealDetail">
+  props: NativeStackScreenProps<RootStackParamsList, "MealDetail">,
 ) => {
   const meal = props.route.params.meal;
+  const favContext = useContext(FavouritesContext);
+
+  const mealIsFavourite = favContext.ids.includes(meal.id);
+
+  const handleFavouriteButton = () => {
+    if (mealIsFavourite) favContext.removeFavId(meal.id);
+    else favContext.addFavId(meal.id);
+  };
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <StarButton color="white" onPress={() => console.log("Pressed")} />
+        <StarButton
+          color="white"
+          onPress={handleFavouriteButton}
+          filled={mealIsFavourite}
+        />
       ),
     });
-  }, []);
+  }, [mealIsFavourite]);
 
   return (
     <ScrollView style={styles.screen} bounces={false}>

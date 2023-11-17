@@ -1,13 +1,13 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useLayoutEffect } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import MealTile from "../components/MealTile";
+import MealsList from "../components/MealsList";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import { RootStackParamsList } from "../types";
 
 const MealsOverviewScreen = (
-  props: NativeStackScreenProps<RootStackParamsList, "MealsOverview">
+  props: NativeStackScreenProps<RootStackParamsList, "MealsOverview">,
 ) => {
   const catId = props.route.params.categoryId;
   useLayoutEffect(() => {
@@ -16,23 +16,12 @@ const MealsOverviewScreen = (
   }, [catId, props.navigation]);
 
   const displayedMeals = MEALS.filter((meal) =>
-    meal.categoryIds.includes(catId)
+    meal.categoryIds.includes(catId),
   );
 
   return (
     <View style={styles.screen}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) => (
-          <MealTile
-            meal={itemData.item}
-            onPress={() =>
-              props.navigation.navigate("MealDetail", { meal: itemData.item })
-            }
-          />
-        )}
-      />
+      <MealsList data={displayedMeals} />
     </View>
   );
 };
